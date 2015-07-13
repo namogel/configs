@@ -1,0 +1,209 @@
+$ gdb ./sublime_text
+(gdb) info file
+Local exec file:
+	`sublime_text', file type elf64-x86-64.
+	Entry point: 0x406a70
+	0x0000000000400270 - 0x000000000040028c is .interp
+	0x000000000040028c - 0x00000000004002ac is .note.ABI-tag
+	0x00000000004002ac - 0x00000000004002d0 is .note.gnu.build-id
+	0x00000000004002d0 - 0x0000000000402148 is .dynsym
+	0x0000000000402148 - 0x0000000000402eee is .dynstr
+	0x0000000000402ef0 - 0x0000000000403828 is .hash
+	0x0000000000403828 - 0x000000000040388c is .gnu.hash
+	0x000000000040388c - 0x0000000000403b16 is .gnu.version
+	0x0000000000403b18 - 0x0000000000403c48 is .gnu.version_r
+	0x0000000000403c48 - 0x0000000000403cd8 is .rela.dyn
+	0x0000000000403cd8 - 0x0000000000405820 is .rela.plt
+	0x0000000000405820 - 0x000000000040582e is .init
+	0x0000000000405830 - 0x0000000000406a70 is .plt
+	0x0000000000406a70 - 0x0000000000726d50 is .text
+	0x0000000000726d50 - 0x0000000000726d59 is .fini
+	0x0000000000726d5c - 0x0000000000751ea5 is .gcc_except_table
+	0x0000000000751ec0 - 0x000000000080a25c is .rodata
+	0x000000000080a260 - 0x00000000008b8d3c is .eh_frame
+	0x00000000008b8d3c - 0x00000000008da738 is .eh_frame_hdr
+	0x00000000008db9c0 - 0x00000000008db9d8 is .tbss
+	0x00000000008db9c0 - 0x00000000008dc4f0 is .data.rel.ro.local
+	0x00000000008dc4f0 - 0x00000000008dc4f8 is .jcr
+	0x00000000008dc4f8 - 0x00000000008dc500 is .fini_array
+	0x00000000008dc500 - 0x00000000008dc8f8 is .init_array
+	0x00000000008dc900 - 0x00000000008df648 is .data.rel.ro
+	0x00000000008df648 - 0x00000000008df8a8 is .dynamic
+	0x00000000008df8b8 - 0x00000000008dffe8 is .got
+	0x00000000008dffe8 - 0x00000000008e0918 is .got.plt
+	0x00000000008e0920 - 0x00000000008ea560 is .data
+	0x00000000008ea560 - 0x00000000008ea560 is .tm_clone_table
+	0x00000000008ea560 - 0x00000000009095d8 is .bss
+(gdb) find 0x751ec0, 0x80a25c, 'U', 'n', 'r', 'e', 'g', 'i'
+0x7556c3
+1 pattern found.
+(gdb) x /2s 0x7556c3
+0x7556c3:	"Unregistered"
+0x7556d0:	"Copyright © 2006-2013 Sublime HQ Pty Ltd"
+(gdb) find 0x751ec0, 0x80a25c, 'R', 'e', 'g', 'i', 's', 't', 'e', 'r'
+0x7556b4
+1 pattern found.
+(gdb) x /s 0x7556b4
+0x7556b4:	"Registered to "
+
+$ objdump -d sublime_text | less
+/0x7556c3
+  4a02a8:       b9 c3 56 75 00          mov    $0x7556c3,%ecx
+g
+/0x7556b4
+  4a016a:       be b4 56 75 00          mov    $0x7556b4,%esi
+
+  4a0287:       e8 9a e4 11 00          callq  5be726 <__lxstat64@plt+0x1b7cc6>
+  4a028c:       eb 37                   jmp    4a02c5 <__lxstat64@plt+0x99865>
+  4a028e:       e8 57 5c fa ff          callq  445eea <__lxstat64@plt+0x3f48a>
+  4a0293:       f2 0f 10 0d 75 69 2c    movsd  0x2c6975(%rip),%xmm1        # 766c10 <_fini+0x3fec0>
+  4a029a:       00 
+  4a029b:       48 8b b3 30 01 00 00    mov    0x130(%rbx),%rsi
+  4a02a2:       f2 0f 10 44 24 58       movsd  0x58(%rsp),%xmm0
+  4a02a8:       b9 c3 56 75 00          mov    $0x7556c3,%ecx
+  4a02ad:       f2 0f 58 4c 24 60       addsd  0x60(%rsp),%xmm1
+  4a02b3:       89 c2                   mov    %eax,%edx
+
+  4a0150:       80 3d 79 a7 44 00 00    cmpb   $0x0,0x44a779(%rip)        # 8ea8d0 <__bss_start+0x370>
+  4a0157:       0f 84 31 01 00 00       je     4a028e <__lxstat64@plt+0x9982e>
+/8ea8d0
+  4081db:       e8 0f 3e 07 00          callq  47bfef <__lxstat64@plt+0x7558f>
+  4081e0:       85 c0                   test   %eax,%eax
+  4081e2:       0f 94 c0                sete   %al
+  4081e5:       84 c0                   test   %al,%al
+  4081e7:       88 05 e3 26 4e 00       mov    %al,0x4e26e3(%rip)        # 8ea8d0 <__bss_start+0x370>
+
+(gdb) b *0x4081e2
+Breakpoint 1 at 0x4081e2
+(gdb) set follow-fork-mode child
+(gdb) r
+Breakpoint 1, 0x00000000004081e2 in ?? ()
+(gdb) display /3i $rip
+1: x/3i $rip
+=> 0x4081e2:	sete   %al
+   0x4081e5:	test   %al,%al
+   0x4081e7:	mov    %al,0x4e26e3(%rip)        # 0x8ea8d0
+(gdb) i r
+rax            0x1	1
+(gdb) ni
+0x00000000004081e5 in ?? ()
+(gdb) i r
+rax            0x0	0
+(gdb) set $rax = 1
+(gdb) c
+
+[ ST is registered ]
+
+$ gdb ./sublime_text
+(gdb) b *0x4081e2
+Breakpoint 1 at 0x4081e2
+(gdb) set follow-fork-mode child
+(gdb) display /3i $rip
+(gdb) r
+(gdb) x /6x 0x4081e2
+0x4081e2:	0x0f	0x94	0xc0	0x84	0xc0	0x88
+(gdb) set *0x4081e2=0x31
+(gdb) set *0x4081e3=0x01c083c0
+(gdb) x /6x 0x4081e2
+0x4081e2:	0x31	0xc0	0x83	0xc0	0x01	0x88
+(gdb) x /3i 0x4081e2
+=> 0x4081e2:	xor    %eax,%eax
+   0x4081e4:	add    $0x1,%eax
+   0x4081e7:	mov    %al,0x4e26e3(%rip)        # 0x8ea8d0
+(gdb) c
+
+[ ST is registered ]
+
+$ cat patch_st3_elfx64_b3059.sh 
+#!/bin/bash
+c=`xxd -p -s 0x0081e0 -l 5 sublime_text`
+if [[ $c == "85c00f94c0" ]]; then
+    cp sublime_text sublime_text.bak
+    echo "0081e0: 31c083c001" | xxd -r - sublime_text
+elif [[ $c == "31c083c001" ]]; then
+    echo "already patched"
+else
+    echo "incorrect binary"
+fi
+$ ./patch_st3_elfx64_b3059.sh
+
+(gdb) find 0x751ec0, 0x80a25c, 'R', 'e', 'g', 'i', 's', 't', 'e', 'r', 'e', 'd'
+0x7556b4
+1 pattern found.
+(gdb) x /15s 0x755600
+0x755600:	"res://Packages/Theme - Default/arrow_right.png"
+0x75562f:	"show_tabs_dropdown_button"
+0x755649:	"res://Packages/Theme - Default/arrow_down.png"
+0x755677:	"tabset_control"
+0x755686:	"enable_tab_scrolling"
+0x75569b:	"Tab Context.sublime-menu"
+0x7556b4:	"Registered to "
+0x7556c3:	"Unregistered"
+0x7556d0:	"Copyright © 2006-2013 Sublime HQ Pty Ltd"
+0x7556fa:	"Stable Channel"
+0x755709:	", Build "
+0x755712:	"about_window"
+0x75571f:	"grep"
+0x755724:	"sublime_text/grep.cc"
+0x755739:	" too large ("
+(gdb) x /30c 0x7556b4
+0x7556b4:	82 'R'	101 'e'	103 'g'	105 'i'	115 's'	116 't'	101 'e'	114 'r'
+0x7556bc:	101 'e'	100 'd'	32 ' '	116 't'	111 'o'	32 ' '	0 '\000'	85 'U'
+0x7556c4:	110 'n'	114 'r'	101 'e'	103 'g'	105 'i'	115 's'	116 't'	101 'e'
+0x7556cc:	114 'r'	101 'e'	100 'd'	0 '\000'	67 'C'	111 'o'
+(gdb) set *(char*)0x7556b4='C'
+(gdb) set *(char*)0x7556b5='r'
+(gdb) set *(char*)0x7556b6='a'
+(gdb) set *(char*)0x7556b7='c'
+(gdb) set *(char*)0x7556b8='k'
+(gdb) set *(char*)0x7556b9='e'
+(gdb) set *(char*)0x7556ba='d'
+(gdb) set *(char*)0x7556bb=' '
+(gdb) set *(char*)0x7556bc='b'
+(gdb) set *(char*)0x7556bd='y'
+(gdb) set *(char*)0x7556be=' '
+(gdb) set *(char*)0x7556bf='E'
+(gdb) set *(char*)0x7556c0='i'
+(gdb) set *(char*)0x7556c1='s'
+(gdb) set *(char*)0x7556c2='e'
+(gdb) set *(char*)0x7556c3='n'
+(gdb) set *(char*)0x7556c4='h'
+(gdb) set *(char*)0x7556c5='e'
+(gdb) set *(char*)0x7556c6='i'
+(gdb) set *(char*)0x7556c7='m'
+(gdb) set *(char*)0x7556c8='-'
+(gdb) set *(char*)0x7556c9='E'
+(gdb) set *(char*)0x7556ca='n'
+(gdb) set *(char*)0x7556cb='j'
+(gdb) set *(char*)0x7556cc='o'
+(gdb) set *(char*)0x7556cd='y'
+(gdb) set *(char*)0x7556ce='!'
+(gdb) x /30c 0x7556b4
+0x7556b4:	67 'C'	114 'r'	97 'a'	99 'c'	107 'k'	101 'e'	100 'd'	32 ' '
+0x7556bc:	98 'b'	121 'y'	32 ' '	69 'E'	105 'i'	115 's'	101 'e'	110 'n'
+0x7556c4:	104 'h'	101 'e'	105 'i'	109 'm'	45 '-'	69 'E'	110 'n'	106 'j'
+0x7556cc:	111 'o'	121 'y'	33 '!'	0 '\000'	67 'C'	111 'o'
+(gdb) x /s 0x7556b4
+0x7556b4:	"Cracked by Eisenheim-Enjoy!"
+
+$ xxd -p -s 0x3556b4 -l 28 sublime_text
+5265676973746572656420746f2000556e7265676973746572656400
+
+$ cat patch_st3_elfx64_b3059.sh 
+#!/bin/bash
+c=`xxd -p -s 0x0081e0 -l 5 sublime_text`
+if [[ $c == "85c00f94c0" ]]; then
+    cp sublime_text sublime_text.bak
+    echo "0081e0: 31c083c001" | xxd -r - sublime_text
+    echo "3556b4: 437261636b656420627920456973656e" | xxd -r - sublime_text
+    echo "3556c4: 6865696d2d456e6a6f792100" | xxd -r - sublime_text
+elif [[ $c == "31c083c001" ]]; then
+    echo "already patched"
+else
+    echo "incorrect binary"
+fi
+
+$ ./patch_st3_elfx64_b3059.sh 
+$ xxd -p -s 0x3556b4 -l 28 sublime_text
+437261636b656420627920456973656e6865696d2d456e6a6f792100
+
