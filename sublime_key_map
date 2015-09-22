@@ -1,0 +1,36 @@
+[
+	{ "keys": ["tab"], "command": "reindent" },
+	{ "keys": ["ctrl+tab"], "command": "insert", "args": {"characters": "\t"} },
+	{ "keys": ["ctrl+space"], "command": "unbound"},
+	{ "keys": ["ctrl+:"], "command": "toggle_comment", "args": { "block": false } },
+	{ "keys": ["ctrl+shift+m"], "command": "toggle_menu"},
+	{ "keys": ["ctrl+a"], "command": "move_to", "args": {"to": "bol", "extend": false} },
+	{ "keys": ["ctrl+e"], "command": "move_to", "args": {"to": "eol", "extend": false} },
+	{ "keys": ["ctrl+shift+a"], "command": "move_to", "args": {"to": "bol", "extend": true} },
+	{ "keys": ["ctrl+shift+e"], "command": "move_to", "args": {"to": "eol", "extend": true} },
+	{ "keys": ["ctrl+q"], "command": "unbound" },
+	{ "keys": ["alt+shift+a"], "command": "select_all" },
+	{ "keys": ["f5"], "command": "refresh_folder_list"},
+	{ "keys": ["ctrl+t"], "command": "unbound" },
+	{ "keys": ["ctrl+alt+s"], "command": "save_all" },
+	{
+		"keys": ["alt+shift+&"],
+		"command": "set_layout",
+		"args":
+		{
+			"cols": [0.0, 1.0],
+			"rows": [0.0, 1.0],
+			"cells": [[0, 0, 1, 1]]
+		}
+	},
+	{
+		"keys": ["alt+shift+é"],
+		"command": "set_layout",
+		"args":
+		{
+		"cols": [0.0, 0.5, 1.0],
+		"rows": [0.0, 1.0],
+		"cells": [[0, 0, 1, 1], [1, 0, 2, 1]]
+		}
+	},
+]

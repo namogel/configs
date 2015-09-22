@@ -1,0 +1,16 @@
+[push]
+        default = simple
+[user]
+        name = namogel
+        email = benjamin@sketchfab.com
+[rebase]
+    autoSquash = true
+    autoStash = true
+[alias]
+        co = checkout
+        ci = commit
+        st = status
+        br = branch
+        logs = !git log --oneline --decorate
+        fixup = "!sh -c 'revision="$( git rev-parse $1 )" && git commit --fixup="${revision}" && git rebase -i --autosquash "${revision}"^' -"
+

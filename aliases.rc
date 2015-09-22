@@ -1,0 +1,27 @@
+# HOST
+alias skfbvmon="cd ~/dev/sketchfab/local && vagrant up --provider virtualbox 'sketchfab-local'"
+alias mountsrc="sudo mount -o nolock sketchfab-local.com:/sketchfab/src ~/dev/sketchfab/src"
+alias mountconf="sudo mount -o nolock sketchfab-local.com:/sketchfab/conf ~/dev/sketchfab/conf"
+alias mountlibs="sudo mount -o nolock sketchfab-local.com:/sketchfab/libs ~/dev/libs"
+alias skfbmount="mountsrc && mountconf && mountlibs"
+alias skfbup="skfbvmon && skfbmount && ssh skfb"
+alias skfbumount="sudo umount ~/dev/sketchfab/src ~/dev/sketchfab/conf ~/dev/libs"
+alias skfbvmoff="cd ~/dev/sketchfab/local && vagrant halt 'sketchfab-local'"
+alias skfbdown="skfbumount && skfbvmoff"
+alias shut="skfbdown && sudo shutdown 0"
+alias gif="byzanz-record -x 0 -y 30 -h 1000"
+alias difftree="git diff-tree --no-commit-id --name-only -r"
+alias tunnel="ssh -f root@xxx.com -L 9000:localhost:5432 -N"
+
+# VM
+alias delete="git br -D"
+alias difftree="git diff-tree --no-commit-id --name-only -r "
+alias yapf="yapf -i"
+alias isort="isort -y"
+alias docker="sudo docker"
+alias dbs="sudo ./docker.sh manage switch_db --list"
+alias dropdb="sudo ./docker.sh dropdb"
+alias createdb="sudo ./docker.sh createdb"
+alias resetes="sudo ./docker.sh manage reset_es --force --all && ./docker.sh manage load_es_data --doc_type models && ./docker.sh manage load_es_data --doc_type collections && ./docker.sh manage load_es_data --doc_type users"
+alias test="sudo ./docker.sh manage test -k "
+
