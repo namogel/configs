@@ -22,6 +22,6 @@ alias docker="sudo docker"
 alias dbs="sudo ./docker.sh manage switch_db --list"
 alias dropdb="sudo ./docker.sh dropdb"
 alias createdb="sudo ./docker.sh createdb"
-alias resetes="sudo ./docker.sh manage reset_es --force --all && ./docker.sh manage load_es_data --doc_type models && ./docker.sh manage load_es_data --doc_type collections && ./docker.sh manage load_es_data --doc_type users"
+alias resetes="sudo ./docker.sh manage reset_es --force && ./docker.sh manage load_es_data --doc_type models && ./docker.sh manage load_es_data --doc_type collections && ./docker.sh manage load_es_data --doc_type users"
 alias test="sudo ./docker.sh manage test -k "
-
+alias populator="sudo ./docker.sh manage populator --force"
