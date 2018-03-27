@@ -1,0 +1,6 @@
+https://github.com/django/django.git
+https://github.com/encode/django-rest-framework.git
+https://github.com/python-social-auth/social-core.git
+https://github.com/python-social-auth/social-app-django.git
+https://github.com/jschneier/django-storages.git
+https://github.com/niwinz/django-redis.git
