@@ -6,7 +6,6 @@ alias skfbumount="sudo umount ~/dev/sketchfab/vm"
 alias skfbvmoff="cd ~/dev/sketchfab/local && vagrant halt sketchfab-local"
 alias skfbdown="skfbumount && skfbvmoff"
 alias shut="skfbdown && sudo shutdown 0"
-alias gif="byzanz-record -x 0 -y 30 -h 1000"
 alias difftree="git diff-tree --no-commit-id --name-only -r"
 
 
