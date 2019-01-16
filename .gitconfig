@@ -13,4 +13,4 @@
         br = branch
         logs = !git log --oneline --decorate
         fixup = "!sh -c 'revision="$( git rev-parse $1 )" && git commit --fixup="${revision}" && git rebase -i --autosquash "${revision}"^' -"
-
+        pushup = "!f() { git rev-parse --abbrev-ref HEAD | xargs -I {} git push -u origin {}; }; f"
