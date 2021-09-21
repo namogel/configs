@@ -37,25 +37,8 @@
 
 
 {
-	"color_scheme": "Packages/User/SublimeLinter/Monokai (Flake8Lint) (SL).tmTheme",
 	"ensure_newline_at_eof_on_save": true,
-	"folder_exclude_patterns":
-	[
-		"builds",
-		"node_modules",
-		"vendors",
-		"contrib",
-		"rest_framework/js",
-		"osgjs",
-		"static/assets/tests",
-		"__pycache__",
-		".git"
-	],
 	"font_size": 9,
-	"ignored_packages":
-	[
-		"Vintage"
-	],
 	"rulers":
 	[
 		100
@@ -63,4 +46,5 @@
 	"translate_tabs_to_spaces": true,
 	"update_check": false
 }
+
 
