@@ -1,16 +1,37 @@
 [push]
-        default = simple
-[user]
-        name = namogel
-        email = benjamin@sketchfab.com
+    default = current
 [rebase]
     autoSquash = true
     autoStash = true
+[pager]
+    branch = false
 [alias]
-        co = checkout
-        ci = commit
-        st = status
-        br = branch
-        logs = !git log --oneline --decorate
-        fixup = "!sh -c 'revision="$( git rev-parse $1 )" && git commit --fixup="${revision}" && git rebase -i --autosquash "${revision}"^' -"
-        pushup = "!f() { git rev-parse --abbrev-ref HEAD | xargs -I {} git push -u origin {}; }; f"
+    pu = pull -p
+    fp = fetch -p
+    sh = stash
+    shp = stash pop
+    co = checkout
+    cod = checkout develop
+    ci = commit
+    st = status
+    br = branch
+    pf = push --force-with-lease
+    rh = reset --hard
+    rs = reset --soft
+    rb = rebase
+    rbd = rebase origin/develop
+    rbm = rebase origin/master
+    rbc = rebase --continue
+    cp = cherry-pick
+    logs = !git log --oneline --decorate
+    fixup = "!sh -c 'revision="$( git rev-parse $1 )" && git commit --fixup="${revision}" && git rebase -i --autosquash "${revision}"^' -"
+    pushup = !git push -u -o merge_request.create -o merge_request.target=develop
+    delete = !git branch -D
+[user]
+    name = benjamin saintes
+    email = benjamin.saintes@sporteasy.net
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
